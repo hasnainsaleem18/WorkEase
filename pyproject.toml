@@ -1,0 +1,121 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autocom"
+version = "0.1.0"
+description = "Voice-first automation platform built on FORGE Framework"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["automation", "voice", "llm", "agents", "desktop"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+]
+
+dependencies = [
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "aiosqlite>=0.19.0",
+    "asyncio>=3.4.3",
+    "python-dotenv>=1.0.0",
+    "cryptography>=41.0.0",
+    "tenacity>=8.2.0",
+    "httpx>=0.24.0",
+    "PyQt6>=6.5.0",
+    "sentence-transformers>=2.2.0",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.11.0",
+    "black>=23.7.0",
+    "ruff>=0.0.285",
+    "mypy>=1.5.0",
+    "bandit>=1.7.5",
+    "safety>=2.3.5",
+]
+
+agents = [
+    "google-auth>=2.22.0",
+    "google-auth-oauthlib>=1.0.0",
+    "google-api-python-client>=2.95.0",
+    "slack-sdk>=3.21.0",
+    "jira>=3.5.0",
+]
+
+voice = [
+    "pvporcupine>=2.2.0",
+    "openai-whisper>=20230314",
+    "piper-tts>=1.2.0",
+    "pyaudio>=0.2.13",
+    "sounddevice>=0.4.6",
+]
+
+llm = [
+    "ollama>=0.1.0",
+]
+
+[project.scripts]
+autocom = "core.main:main"
+forge = "forge_cli.cli:main"
+
+[tool.setuptools]
+packages = ["agents", "core", "ui", "database", "voice", "config", "memory", "extensions", "forge_cli"]
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I", "N", "UP", "ANN", "S", "B", "A", "C4", "DTZ", "T10", "EM", "ISC", "ICN", "PIE", "PT", "Q", "RSE", "RET", "SIM", "TID", "ARG", "PLE", "PLW", "TRY", "RUF"]
+ignore = ["ANN101", "ANN102", "S101"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_any_unimported = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --cov=. --cov-report=html --cov-report=term"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["agents", "core", "ui", "database", "voice"]
+omit = ["tests/*", "*/migrations/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]

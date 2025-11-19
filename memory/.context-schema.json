@@ -1,0 +1,194 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "AUTOCOM Memory Context Schema",
+    "description": "Schema for IDE context preservation and project understanding",
+    "type": "object",
+    "properties": {
+        "project_metadata": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "const": "AUTOCOM"
+                },
+                "framework": {
+                    "type": "string",
+                    "const": "FORGE"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "last_updated": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "active_session": {
+            "type": "object",
+            "properties": {
+                "session_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "open_files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "breakpoints": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "file": {
+                                "type": "string"
+                            },
+                            "line": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "type_definitions": {
+            "type": "object",
+            "description": "All custom types and their locations",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string"
+                    },
+                    "line": {
+                        "type": "integer"
+                    },
+                    "kind": {
+                        "type": "string",
+                        "enum": [
+                            "class",
+                            "dataclass",
+                            "enum",
+                            "type_alias"
+                        ]
+                    },
+                    "fields": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "methods": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "function_registry": {
+            "type": "object",
+            "description": "All functions and their signatures",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string"
+                    },
+                    "line": {
+                        "type": "integer"
+                    },
+                    "signature": {
+                        "type": "string"
+                    },
+                    "async": {
+                        "type": "boolean"
+                    },
+                    "docstring": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dependencies": {
+            "type": "object",
+            "properties": {
+                "internal": {
+                    "type": "object",
+                    "description": "Module dependency graph",
+                    "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "external": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "event_flows": {
+            "type": "array",
+            "description": "Event bus message flows",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "event_name": {
+                        "type": "string"
+                    },
+                    "emitters": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "subscribers": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "payload_schema": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "configuration_state": {
+            "type": "object",
+            "properties": {
+                "config_files": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "environment_vars": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "active_agents": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

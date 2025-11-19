@@ -1,0 +1,72 @@
+# Agentic IDE Context Rules: Preserve Forge Project State Across Tools
+# Purpose: Ensure datatypes, funcs, context survive IDE switches (Cursor → Windsurf → VS Code).
+# Core: memory/ dir as agent "brain"—logs decisions, schemas, traces for rebuilds.
+# Usage: On project open, load memory/ to hydrate context; on save, dump updates.
+
+version: "1.0"
+project_type: "Forge Agentic App"
+
+# Global Preservation Rules
+preservation:
+  datatypes:
+    enforce: "TypedDict | Pydantic BaseModel; no untyped dicts"
+    sync: "On switch: Scan .py for mypy violations; auto-fix with stub files in memory/types/"
+    examples:
+      - "AgentConfig: token: str, model: str = 'llama3.1:8b'"
+      - "Message: content: str, sentiment: float (-1 to 1)"
+  functions:
+    signatures: "Preserve args/returns/docs; use inspect.signature on load"
+    docs: "Google-style docstrings mandatory; cache in memory/docs/ for completions"
+    overrides: "Flag changes: e.g., if automate() loses async, revert from memory/backup/"
+  context:
+    scope: "Full: Imports, globals, recent edits (last 10 saves)"
+    hydration: "New IDE: Query memory/context.db for 'last_state'; replay via comments"
+    drift_detection: "Diff on open: If >5% change in types/funcs, alert + rollback option"
+
+# Memory Directory Structure
+memory:
+  path: "memory/"
+  files:
+    - "context.db"
+    - "types/"
+    - "docs/"
+    - "backups/"
+    - "agent_log.yaml"
+  rules:
+    agent_access: "Building agent (IDE AI) writes here; e.g., after 'Why local LLM?': {'rationale': 'Privacy for AutoCom', 'refs': ['config.yaml#llm'] }"
+    query: "IDE cmd: 'memory query intent_routing' → Returns traces for auto-complete"
+    versioning: "On commit: Dump state; git tag 'v0.1-memory'"
+    privacy: "Encrypt sensitive (tokens) with key from .env; local-only"
+    size_limit: "Prune >1GB; keep last 30 days"
+
+# Switchover Protocol
+switch_protocol:
+  on_exit:
+    - "Dump: Pydantic serialize open files to memory/state.json"
+    - "Trace: Log active session (e.g., 'Editing voice_agent.py: Added wake detection')"
+    - "Validate: Run mypy + ruff; flag issues in memory/alerts/"
+  on_entry:
+    - "Load: From memory/context.db, inject into IDE context (e.g., 'Recall: Use BaseAgent for Jira')"
+    - "Reconstruct: Generate temp comments: # From memory: automate() expects dict[action='mute']"
+    - "Sync: Pull latest git; merge memory diffs if conflicts"
+  tools:
+    - "inspect": "Python lib to verify func sigs match memory/"
+    - "pydantic": "Validate models on load; error if drift"
+    - "sqlite3": "For memory.db queries in IDE console"
+
+# Agentic Behaviors
+agentic:
+  building_agent:
+    persona: "Forge Specialist: Optimizes for AutoCom—voice-first, privacy, scalability"
+    memory_usage: "Before suggest: Query memory for similar (e.g., 'Past Slack mute impl?')"
+    decisions: "Log all: Rationale, alternatives, why chosen (e.g., 'Ollama over HF: Offline')"
+    collaboration: "If multi-IDE, sync memory/ via git LFS for large traces"
+  error_handling:
+    on_drift: "Auto-revert small; prompt user for large (e.g., 'Datatype str → int in Message? Restore?')"
+    recovery: "Fallback: memory/backups/latest_state.py as temp file"
+
+# Integration with Forge
+forge_tie_in:
+  auto_apply: "On generate agent: Update memory/types/ with new BaseModel"
+  fyp_specific: "Enforce jury rules: Log 'workflow_clear' in memory for diagrams"
+  extensions: "If plugin added, cache in memory/plugins/ for cross-IDE discovery"

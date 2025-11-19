@@ -1,0 +1,54 @@
+app:
+  name: "AUTOCOM"
+  version: "0.1.0"
+  description: "Voice-first automation platform"
+  log_level: "INFO"
+
+orchestrator:
+  llm_model: "llama3.1:8b"
+  llm_endpoint: "http://localhost:11434"
+  confidence_threshold: 0.7
+  context_window: 10
+  temperature: 0.3
+  max_tokens: 500
+
+voice:
+  wake_word: "hey-auto"
+  stt_model: "whisper-base"
+  tts_voice: "en_US-lessac-medium"
+  enabled: true
+  audio_device: "default"
+  sample_rate: 16000
+  channels: 1
+
+notifications:
+  quiet_hours:
+    enabled: true
+    start: "22:00"
+    end: "08:00"
+  urgent_override: true
+  sound_enabled: true
+  desktop_notifications: true
+
+memory:
+  retention_days: 30
+  embedding_model: "all-MiniLM-L6-v2"
+  max_context_items: 10
+  prune_schedule: "daily"
+
+ui:
+  theme: "dark"
+  system_tray: true
+  keyboard_shortcuts: true
+  start_minimized: false
+  close_to_tray: true
+
+database:
+  path: "memory/context.db"
+  backup_enabled: true
+  backup_interval: 86400
+
+security:
+  credentials_file: "config/credentials.enc"
+  encryption_algorithm: "fernet"
+  token_refresh_margin: 300

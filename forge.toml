@@ -1,0 +1,54 @@
+[project]
+name = "autocom"
+version = "0.1.0"
+description = "Voice-first automation platform built on FORGE Framework"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+python_version = "3.10"
+
+[forge]
+framework_version = "0.1.0"
+
+[orchestrator]
+llm_model = "llama3.1:8b"
+confidence_threshold = 0.7
+context_window = 10
+max_retries = 3
+
+[voice]
+enabled = true
+wake_word = "hey-auto"
+stt_model = "whisper-base"
+tts_voice = "en_US-lessac-medium"
+audio_sample_rate = 16000
+
+[notifications]
+enabled = true
+
+[notifications.quiet_hours]
+enabled = true
+start = "22:00"
+end = "08:00"
+urgent_override = true
+
+[memory]
+retention_days = 30
+embedding_model = "all-MiniLM-L6-v2"
+vector_dimensions = 384
+
+[ui]
+theme = "dark"
+system_tray = true
+keyboard_shortcuts = true
+window_width = 1200
+window_height = 800
+
+[logging]
+level = "INFO"
+file = "logs/autocom.log"
+max_bytes = 10485760
+backup_count = 5
+
+[security]
+encrypt_credentials = true
+token_refresh_margin = 300

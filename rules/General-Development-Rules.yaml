@@ -1,0 +1,195 @@
+# General Development Rules File for Vibe Coding Tools
+# Version: 1.0
+# Description: Configuration for implementing best practices in vibe coding tools (e.g., AI-assisted IDEs) to ensure smooth, reliable development, especially for complex projects.
+# This file defines rules for context management, project understanding, error prevention, scalability, and collaboration.
+# Load this in your tool's plugin, extension, or configuration to enforce these rules. It promotes stability, efficiency, and avoids common pitfalls like state loss, conflicts, or performance degradation.
+
+model:
+  name: General-Dev-Rules
+  description: General rules for development in vibe coding tools to maintain flow, handle complexity, and prevent disruptions.
+  principles:
+    - Stability: Ensure tools remain reliable under heavy loads or long sessions.
+    - Efficiency: Optimize for quick feedback and minimal interruptions.
+    - Scalability: Handle large codebases without slowdowns or errors.
+    - User-Centric: Support intuitive workflows while enforcing best practices.
+    - Resilience: Recover gracefully from errors or changes.
+
+context_management:
+  preservation:
+    - rule: persistent_state
+      description: Maintain session state across restarts, including open files, variables, and tool configurations.
+      enforcement:
+        - auto_save_state
+        - load_on_startup
+    - rule: tool_switch
+      description: Seamlessly transfer context when switching between tools (e.g., export/import project metadata).
+      enforcement:
+        - standardize_context_format
+        - example: .dev-context.json
+    - rule: version_control
+      description: Integrate with VCS (e.g., Git) for automatic commits and branch management during key changes.
+      enforcement:
+        - auto_commit_on_milestones
+        - conflict_resolution_assist
+  synchronization:
+    - rule: real_time_sync
+      description: Sync changes across devices or collaborators in real-time.
+      enforcement:
+        - enable_collaborative_editing
+        - cloud_backup
+    - rule: dependency_sync
+      description: Keep dependencies, environments, and configs in sync to avoid version mismatches.
+      enforcement:
+        - lock_files_check
+        - examples:
+          - package-lock.json
+          - requirements.txt
+
+project_understanding:
+  analysis:
+    - rule: full_code_scan
+      description: On load or change, scan the entire project for structure, including classes, functions, datatypes, and relationships.
+      enforcement:
+        - build_ast_map
+        - update_incrementally
+    - rule: dependency_graph
+      description: Generate and maintain a graph of dependencies to visualize and detect cycles or issues.
+      enforcement:
+        - visualize_graph
+        - alert_on_cycles
+    - rule: code_quality_checks
+      description: Run linters, formatters, and static analyzers automatically.
+      enforcement:
+        - pre_save_lint
+        - auto_format
+  inference:
+    - rule: intelligent_suggestions
+      description: Provide context-aware suggestions for code completion, refactoring, and optimizations.
+      enforcement:
+        - ai_powered_completion
+        - relevance_threshold: 0.8
+    - rule: type_and_function_inference
+      description: Infer and enforce types, signatures, and behaviors to prevent runtime errors.
+      enforcement:
+        - type_checking_tools
+        - error_prediction
+    - rule: complexity_metrics
+      description: Monitor code complexity (e.g., cyclomatic complexity) and warn on thresholds.
+      enforcement:
+        - calculate_metrics
+        - alert_if_above: 10
+
+development_flow:
+  vibe_coding:
+    - rule: flow_state_support
+      description: Minimize distractions with focused modes, auto-suggestions, and quick navigation.
+      enforcement:
+        - distraction_free_mode
+        - hotkeys_for_common_actions
+    - rule: iterative_development
+      description: Support rapid prototyping with live previews, hot-reloading, and incremental builds.
+      enforcement:
+        - enable_live_reload
+        - partial_execution
+    - rule: debugging_enhancements
+      description: Advanced debugging with preserved states, time-travel, and AI-assisted bug finding.
+      enforcement:
+        - integrated_debugger
+        - ai_bug_suggestions
+  complex_project_handling:
+    - rule: modularization
+      description: Encourage and enforce modular code structures to manage complexity.
+      enforcement:
+        - suggest_modules
+        - enforce_import_rules
+    - rule: performance_optimization
+      description: Monitor and optimize for large projects, e.g., lazy loading of modules.
+      enforcement:
+        - profile_on_demand
+        - optimize_slow_sections
+    - rule: error_resilience
+      description: Prevent and recover from crashes, e.g., auto-save before risky operations.
+      enforcement:
+        - crash_recovery
+        - undo_stack_depth: 100
+  additions_and_modifications:
+    - rule: safe_integration
+      description: Validate new code against existing structure before integration.
+      enforcement:
+        - run_tests_on_change
+        - compatibility_checks
+    - rule: refactor_assist
+      description: Provide safe refactoring tools that preserve functionality.
+      enforcement:
+        - preview_refactor
+        - test_post_refactor
+    - rule: documentation_sync
+      description: Auto-generate or update docs for changes.
+      enforcement:
+        - auto_doc_generation
+        - inline_comments_suggestions
+
+collaboration:
+  - rule: multi_user_support
+    description: Enable real-time collaboration with conflict detection.
+    enforcement:
+      - live_collaboration
+      - merge_assist
+  - rule: review_integration
+    description: Integrate code reviews and feedback loops.
+    enforcement:
+      - pr_tools
+      - comment_threads
+
+governance_rules:
+  - rule: activation_threshold
+    description: Activate rules only for projects above a certain size/complexity.
+    enforcement:
+      - check_project_size
+      - min_files: 50
+  - rule: user_overrides
+    description: Allow users to override rules for flexibility.
+    enforcement:
+      - configurable_rules
+      - log_overrides
+  - rule: monitoring
+    description: Track tool performance and rule adherence.
+    enforcement:
+      - performance_logs
+      - alert_on_violations
+  - rule: update_rule
+    description: Ensure tools stay updated to handle new languages or features.
+    enforcement:
+      - auto_update_check
+      - compatibility_mode
+  - rule: security_checks
+    description: Enforce security best practices, e.g., vulnerability scans.
+    enforcement:
+      - scan_on_build
+      - secret_management
+
+integration:
+  tool_agnostic: true
+  file_formats:
+    - context_file: .dev-context.yaml
+    - config_file: .dev-rules.yaml
+  extensions_recommended:
+    - general:
+      - AI-Assist Plugin
+      - VCS Integration
+
+logging:
+  enabled: true
+  level: balanced
+  features:
+    - log_changes
+    - log_errors
+    - log_performance
+    - log_suggestions
+
+mitigations:
+  - overload_prevention: Throttle suggestions in complex projects to avoid UI lag.
+  - fallback_modes: Provide manual modes if AI fails.
+  - training_data: Use project history to improve tool understanding over time.
+  - feedback_loop: Allow user feedback on rules for iterative improvements.
+  - resource_limits: Set CPU/memory caps to prevent tool crashes.

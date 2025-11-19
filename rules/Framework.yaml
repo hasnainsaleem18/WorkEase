@@ -1,0 +1,135 @@
+# Forge IDE Rules: Enforce Modular Agentic Desktop Framework
+# Purpose: Guide IDE to scaffold, autocomplete, and validate Forge structure for AutoCom-like apps.
+# Usage: Load in IDE for auto-gen, type checks, and workflow guards. Ensures Linux-native, async-first builds.
+
+version: "1.0"
+framework_name: "Forge"
+
+# Global Enforcements: Apply to all files
+global:
+  language: "python"
+  style_guide:
+    linter: "ruff"
+    typing: "strict"
+    async_default: true
+  imports:
+    relative: false
+    banned: ["os.path", "threading"]
+  errors:
+    ignore: ["E501"]
+    warn_on: ["unused-import", "untyped-def"]
+  completions:
+    priority: ["forge.core", "forge.agents"]
+
+# Directory Structure Enforcement
+structure:
+  root: "forge-app/"
+  dirs:
+    agents:
+      path: "agents/"
+      files:
+        - "__init__.py"
+        - "base_agent.py"
+        - "<tool>_agent.py"
+      rules:
+        naming: "snake_case"
+        exports: "from .base_agent import BaseAgent"
+        validation: "pydantic.BaseModel for configs; test with pytest -m agent"
+    core:
+      path: "core/"
+      files:
+        - "__init__.py"
+        - "orchestrator.py"
+        - "main.py"
+        - "event_handler.py"
+      rules:
+        entry_point: "if __name__ == '__main__': from .orchestrator import run_app"
+        guards: "No batch files—use asyncio for flows (jury note compliance)"
+    ui:
+      path: "ui/"
+      files:
+        - "__init__.py"
+        - "base_ui.py"
+        - "dashboard.py"
+      rules:
+        toolkit: "PySide6"
+        polling: "QTimer(30000) for /unified-inbox refresh"
+    database:
+      path: "database/"
+      files:
+        - "__init__.py"
+        - "models.py"
+        - "connection.py"
+      rules:
+        orm: "sqlalchemy"
+        schema: "Auto-migrate on boot; index on urgency_score"
+    config:
+      path: "config/"
+      files:
+        - "config.yaml"
+        - ".env.example"
+      rules:
+        loader: "pyyaml.safe_load; pydantic.validate"
+    extensions:
+      path: "extensions/"
+      files:
+        - "__init__.py"
+        - "plugin_loader.py"
+      rules:
+        discovery: "Scan on boot; load if 'forge.agent' in metadata"
+    tests:
+      path: "tests/"
+      files:
+        - "__init__.py"
+        - "test_agents.py"
+      rules:
+        coverage: ">80%; run pytest -v --cov=agents"
+    docs:
+      path: "docs/"
+      files:
+        - "README.md"
+      rules:
+        auto_gen: "Use sphinx on commit; include use_cases.md with diagrams"
+
+# Feature-Specific Rules
+features:
+  voice:
+    libs: ["openai-whisper:tiny", "pyttsx3", "porcupine2"]
+    rules:
+      listener: "Async loop in voice_agent.py; route on wake"
+      latency: "<2s; warn if >1s in tests"
+  ai:
+    libs: ["ollama", "transformers"]
+    rules:
+      pipeline: "Chain: STT -> intent_classify -> summarize; prompt templates in ai/"
+      privacy: "No cloud; encrypt tokens in DB"
+  integrations:
+    tools: ["slack-sdk", "google-api-python-client", "atlassian-python-api"]
+    rules:
+      auth: "OAuth2 via authlib; store in DB encrypted"
+      polling: "Async every 30s; use tenacity.retry on fail"
+  notifications:
+    libs: ["notify2", "plyer"]
+    rules:
+      hub: "Central in event_handler; urgent bypasses quiet"
+
+# Workflow Automation
+automation:
+  cli_commands:
+    - "init <name>": "Scaffold full structure; cookiecutter templates"
+    - "generate agent <name>": "Create <name>_agent.py inheriting BaseAgent"
+    - "run": "uvicorn core.api:app + PySide6 window"
+    - "test": "pytest; coverage report"
+    - "build": "pyinstaller --onefile; appimagetool for Linux"
+  hooks:
+    pre_commit: "ruff check; mypy; forge validate-structure"
+    on_save: "Auto-import fix; suggest async def for new funcs"
+
+# Validation & Debugging
+validation:
+  structure_check: "On open: Scan dirs match above; warn if missing base_agent.py"
+  type_check: "mypy --config-file forge_mypy.ini; strict on agents"
+  fyp_compliance: "Flag batch files; ensure workflow clarity in comments"
+debug:
+  logging: "structlog; levels: DEBUG for agents, INFO for core"
+  breakpoints: "Suggest in IDE for async points: await agent.fetch()"
