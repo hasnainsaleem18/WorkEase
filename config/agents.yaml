@@ -1,0 +1,37 @@
+agents:
+  gmail:
+    enabled: true
+    name: "Gmail Agent"
+    scopes:
+      - "https://www.googleapis.com/auth/gmail.readonly"
+      - "https://www.googleapis.com/auth/gmail.send"
+      - "https://www.googleapis.com/auth/gmail.modify"
+    poll_interval: 60
+    batch_size: 50
+    timeout: 10
+    retry_attempts: 3
+  
+  slack:
+    enabled: true
+    name: "Slack Agent"
+    workspace: ""
+    realtime: true
+    scopes:
+      - "channels:history"
+      - "channels:read"
+      - "chat:write"
+      - "users:read"
+    timeout: 10
+    retry_attempts: 3
+  
+  jira:
+    enabled: true
+    name: "Jira Agent"
+    server: "https://your-domain.atlassian.net"
+    project_key: "PROJ"
+    timeout: 10
+    retry_attempts: 3
+    issue_types:
+      - "Task"
+      - "Bug"
+      - "Story"

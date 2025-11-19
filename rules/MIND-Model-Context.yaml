@@ -1,0 +1,163 @@
+# MIND-Model Context Rules File
+# Version: 1.0
+# Description: Configuration for implementing context preservation, project understanding, and seamless development in IDEs under the Mesh Integration Networked Development Model (MIND-Model).
+# This file defines rules for maintaining state across IDE switches, understanding code structure, and ensuring smooth additions or modifications.
+# Load this in your IDE's workflow plugin, extension, or configuration to enable MIND-Model context compliance. It complements the core rules file by focusing on development continuity.
+
+model:
+  name: MIND-Model-Context
+  description: Extension to MIND-Model for handling project context, understanding, and development flow across IDEs and sessions.
+  principles:
+    - Continuity: Preserve project state when switching IDEs or environments.
+    - Comprehension: Automatically infer and maintain knowledge of datatypes, functions, variables, and dependencies.
+    - Seamlessness: Ensure new additions or changes integrate without conflicts or errors.
+    - Synchronization: Keep code, configurations, and metadata in sync across tools.
+
+context_management:
+  preservation:
+    - rule: session_state
+      description: Save and load session state including open files, cursor positions, breakpoints, and recent changes.
+      enforcement:
+        - auto_save_on_exit
+        - auto_load_on_open
+    - rule: ide_switch
+      description: When switching IDEs, export/import project context via standardized files (e.g., .mind-context.json).
+      enforcement:
+        - generate_context_file
+        - parse_context_on_import
+    - rule: version_control_integration
+      description: Integrate with Git or similar to track changes and resolve merge conflicts automatically where possible.
+      enforcement:
+        - auto_commit_on_switch
+        - pull_latest_on_open
+  synchronization:
+    - rule: cloud_sync
+      description: Use cloud storage or shared repositories to sync project files, dependencies, and configurations across devices/IDEs.
+      enforcement:
+        - enable_sync_services
+        - example: GitHub, OneDrive, Dropbox integration
+    - rule: metadata_sync
+      description: Sync metadata like build configs, environment variables, and dependency locks.
+      enforcement:
+        - include_in_sync:
+          - .env
+          - package.json
+          - requirements.txt
+          - build.gradle
+
+project_understanding:
+  analysis:
+    - rule: static_analysis
+      description: Perform static code analysis to understand datatypes, functions, classes, and modules on project load.
+      enforcement:
+        - run_linters
+        - examples: ESLint, Pylint
+        - type_checkers
+        - examples: TypeScript, mypy
+    - rule: dependency_mapping
+      description: Map and validate all dependencies, imports, and external references.
+      enforcement:
+        - scan_dependencies
+        - resolve_versions
+    - rule: code_structure
+      description: Build an abstract syntax tree (AST) or code map for quick navigation and comprehension.
+      enforcement:
+        - generate_code_map
+        - update_on_change
+  inference:
+    - rule: type_inference
+      description: Infer datatypes for variables and functions if not explicitly defined.
+      enforcement:
+        - use_tools
+        - examples: IntelliSense, Copilot-like AI for suggestions
+    - rule: function_signatures
+      description: Maintain and suggest function signatures, parameters, and return types.
+      enforcement:
+        - auto_complete_signatures
+        - validate_on_edit
+    - rule: error_prevention
+      description: Predict and prevent issues like type mismatches or undefined references before saving.
+      enforcement:
+        - real_time_linting
+        - pre_save_checks
+
+development_flow:
+  vibe_coding:
+    - rule: auto_completion
+      description: Provide context-aware auto-completions based on project understanding.
+      enforcement:
+        - enable_ai_assist
+        - context_aware_suggestions
+    - rule: refactoring_support
+      description: Assist in refactoring code without breaking existing functionality.
+      enforcement:
+        - safe_refactor_tools
+        - test_after_refactor
+    - rule: debugging_integration
+      description: Seamless debugging with preserved breakpoints and watch variables across sessions.
+      enforcement:
+        - sync_debug_state
+        - integrated_debugger
+  additions_and_modifications:
+    - rule: new_feature_integration
+      description: When adding new code, validate against existing structure to avoid conflicts.
+      enforcement:
+        - run_tests_on_add
+        - check_compatibility
+    - rule: incremental_builds
+      description: Support incremental builds and hot-reloading for quick feedback.
+      enforcement:
+        - enable_hot_reload
+        - partial_compiles
+    - rule: documentation_auto_gen
+      description: Automatically generate or update docs for new functions/datatypes.
+      enforcement:
+        - auto_doc_tools
+        - examples: JSDoc, Sphinx
+
+governance_rules:
+  - rule: context_activation
+    description: Load context only if project metadata matches (e.g., via .mind-project-id).
+    enforcement:
+      - validate_project_id
+  - rule: understanding_validation
+    description: Run full project scan on load to confirm comprehension.
+    enforcement:
+      - initial_scan_required
+  - rule: flow_monitoring
+    description: Monitor development flow and alert on potential issues (e.g., unresolved references).
+    enforcement:
+      - real_time_alerts
+  - rule: backup_rule
+    description: Automatically backup context before major changes or IDE switches.
+    enforcement:
+      - auto_backup
+  - rule: compatibility_check
+    description: Ensure rules are compatible with target IDE features.
+    enforcement:
+      - ide_feature_detection
+
+integration:
+  ide_agnostic: true
+  file_formats:
+    - context_file: .mind-context.yaml
+    - project_metadata: .mind-project.yaml
+  extensions_recommended:
+    - vs_code: MIND-Model Extension
+    - cursor: MIND-Context Plugin
+    - general: Custom scripts for import/export
+
+logging:
+  enabled: true
+  level: detailed
+  features:
+    - log_context_switches
+    - log_understanding_scans
+    - log_development_events
+    - error_logs_for_conflicts
+
+mitigations:
+  - conflict_resolution: Use AI-assisted merges for datatype or function conflicts.
+  - performance_optimization: Limit scans to changed files for large projects.
+  - user_overrides: Allow manual overrides for inferred types or suggestions.
+  - security: Encrypt context files for sensitive projects.
