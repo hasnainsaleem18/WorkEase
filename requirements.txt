@@ -1,0 +1,68 @@
+# Core async and networking
+aiohttp>=3.9.0
+aiosqlite>=0.19.0
+asyncio>=3.4.3
+
+# UI Framework
+PyQt6>=6.6.0
+PyQt6-Qt6>=6.6.0
+
+# Database and Storage
+sqlite3  # Built-in, but noting it
+
+# Security and Encryption
+cryptography>=41.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+hypothesis>=6.92.0
+
+# Data validation and serialization
+pydantic>=2.5.0
+
+# Configuration management
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+
+# Date and time utilities
+python-dateutil>=2.8.2
+
+# Gmail API (for future implementation)
+google-auth>=2.25.0
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.2.0
+google-api-python-client>=2.110.0
+
+# Slack SDK (for future implementation)
+slack-sdk>=3.26.0
+
+# Voice/Speech (for future implementation)
+# pyttsx3>=2.90  # TTS
+# SpeechRecognition>=3.10.0  # STT
+# pyaudio>=0.2.14  # Audio I/O
+# pvporcupine>=3.0.0  # Wake word detection
+
+# LangChain and RAG dependencies (core features)
+langchain>=0.1.0  # Core LangChain functionality
+langchain-community>=0.0.10  # Community integrations
+langchain-core>=0.1.0  # Core abstractions
+langchain-text-splitters>=0.0.1  # Text chunking for RAG
+
+# Vector databases and embeddings for RAG
+chromadb>=0.4.0  # Vector DB for semantic search
+sentence-transformers>=2.2.0  # Embeddings for semantic similarity
+hnswlib>=0.7.0  # Efficient vector search library
+
+# LLM Integrations
+langchainhub>=0.1.13  # Prompt sharing and reuse
+llama-cpp-python>=0.2.0  # Local LLM integration (optional)
+
+# Development tools
+black>=23.12.0
+flake8>=7.0.0
+mypy>=1.8.0
+isort>=5.13.0
+
+# Logging and monitoring
+structlog>=24.1.0
