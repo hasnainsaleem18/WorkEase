@@ -1,0 +1,4 @@
+PySide6
+slack_sdk
+keyring
+requests
