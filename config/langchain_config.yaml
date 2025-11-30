@@ -1,0 +1,120 @@
+# LangChain & RAG Configuration for AutoReturn
+# This file contains settings for LangChain integration and RAG capabilities
+
+# LLM Configuration
+llm:
+  # Type of LLM to use: "ollama", "openai", "anthropic", etc.
+  provider: "ollama"
+
+  # Model name - depends on provider
+  # - For Ollama: "llama3.2:3b", "llama3.1:8b", "phi3:mini", etc.
+  # - For OpenAI: "gpt-3.5-turbo", "gpt-4", etc.
+  model_name: "llama3.2:3b"
+
+  # API settings (for cloud LLMs)
+  api_key: "" # Leave empty for local models
+  api_base_url: "" # Custom URL if needed
+
+  # Generation parameters
+  temperature: 0.7
+  max_tokens: 1000
+  top_p: 0.95
+  stop_sequences: []
+
+# Memory & Context Provider
+memory:
+  # Provider type: "simple", "langchain", "rag"
+  provider: "langchain"
+
+  # LangChain memory settings (used when provider="langchain")
+  langchain:
+    # Memory type: "buffer", "summary", "buffer_summary"
+    memory_type: "buffer_summary"
+    # Maximum tokens to store in memory
+    max_tokens: 2000
+    # Whether to summarize old messages when token limit is reached
+    summarize_old: true
+    # LLM model to use for summarization (required for summary types)
+    llm_model: "llama3.2:3b"
+    # Persistence directory for saving memory between sessions
+    persist_directory: "memory/langchain_conversations"
+
+  # RAG settings (used when provider="rag")
+  rag:
+    # Vector database type: "chroma", "faiss", etc.
+    vector_db: "chroma"
+    # Directory to store vector database
+    persist_directory: "memory/rag_db"
+    # Embedding model for vector encoding
+    embedding_model: "all-MiniLM-L6-v2"
+    # Size of text chunks for embedding
+    chunk_size: 512
+    # Number of results to return in similarity search
+    search_k: 5
+
+  # Simple SQLite settings (used when provider="simple")
+  simple:
+    # SQLite database path
+    db_path: "memory/workease.db"
+    # Retention period in days (0 for indefinite)
+    retention_days: 30
+
+# Orchestrator Configuration
+orchestrator:
+  # Enable chain-of-thought reasoning
+  chain_of_thought: true
+  # Enable verbose logging of reasoning steps
+  verbose: false
+  # Session timeout in minutes
+  session_timeout: 60
+  # Default agent to use for unrecognized commands
+  default_agent: "assistant"
+
+# Agent Configuration
+agents:
+  # Gmail agent settings
+  gmail:
+    enabled: true
+    polling_interval: 60 # seconds
+    # Maximum emails to fetch in one polling cycle
+    fetch_limit: 20
+    # API credentials file path
+    credentials_path: "config/gmail_credentials.json"
+
+  # Slack agent settings
+  slack:
+    enabled: true
+    polling_interval: 30 # seconds
+    # API token (prefer environment variable)
+    token: ""
+    # Channels to monitor (empty for all)
+    channels: []
+    # Direct messages monitoring
+    monitor_dms: true
+
+# Tools Configuration
+tools:
+  # System tools
+  system:
+    - name: "calendar"
+      enabled: true
+    - name: "file_manager"
+      enabled: true
+
+  # Web tools
+  web:
+    - name: "search"
+      enabled: false
+    - name: "browser"
+      enabled: false
+
+# Advanced Settings
+advanced:
+  # Number of processing threads
+  threads: 4
+  # Agent batch size for concurrent processing
+  batch_size: 5
+  # Enable learning from user feedback
+  learn_from_feedback: true
+  # Debug mode
+  debug: false
